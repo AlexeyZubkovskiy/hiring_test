@@ -1,0 +1,3 @@
+In real application entities from the Domain layer mustn't be the same objects from Data layer
+for separation business logic from the data model. One more reason for separation between Data and
+Domain level entities is that Presentation layer mustn't know about Data level in reason of unidirectional data flow.

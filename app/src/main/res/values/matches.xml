@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="label_matches">Matches</string>
+
+	<string name="date">Date</string>
+	<string name="first_player">First Player</string>
+	<string name="second_player">Second Player</string>
+	<string name="save">Save</string>
+</resources>

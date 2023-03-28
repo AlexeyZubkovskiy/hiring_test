@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/main_nav_graph"
+	app:startDestination="@id/destination_matches_fragment">
+	<fragment
+		android:id="@+id/destination_matches_fragment"
+		android:name="com.hiringtest.matchkeeper.presentation.matches.MatchesFragment"
+		android:label="@string/label_matches" />
+
+	<fragment
+		android:id="@+id/destination_change_match"
+		android:name="com.hiringtest.matchkeeper.presentation.changematch.ChangeMatchFragment">
+		<argument
+			android:name="arg_is_edit"
+			android:defaultValue="false"
+			app:argType="boolean" />
+
+		<argument
+			android:name="arg_match_id"
+			android:defaultValue=""
+			app:argType="string" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/destination_players"
+		android:name="com.hiringtest.matchkeeper.presentation.players.PlayersFragment" />
+
+</navigation>

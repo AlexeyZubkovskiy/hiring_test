@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="games_won">Games Won</string>
+	<string name="games_played">Games Played</string>
+	<string name="player">Player</string>
+</resources>

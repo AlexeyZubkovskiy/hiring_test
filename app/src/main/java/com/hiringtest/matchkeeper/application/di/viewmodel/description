@@ -1,0 +1,2 @@
+This approach for handling ViewModels was taken from the android repository:
+https://github.com/android/architecture-samples/blob/dev-dagger/app/src/main/java/com/example/android/architecture/blueprints/todoapp/di/ViewModelFactory.kt
