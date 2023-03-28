@@ -2,14 +2,18 @@ package com.hiringtest.matchkeeper.presentation.players
 
 import com.hiringtest.matchkeeper.application.Schedulers
 import com.hiringtest.matchkeeper.domain.entities.PlayerTotal
+import com.hiringtest.matchkeeper.domain.usecase.players.GetKingOfTheGameUseCase
 import com.hiringtest.matchkeeper.domain.usecase.players.GetPlayersTotalSortedDescendingUseCase
 import com.hiringtest.matchkeeper.presentation.base.BaseClosableViewModel
 import com.hiringtest.matchkeeper.presentation.base.BaseViewModel
 import com.hiringtest.matchkeeper.utils.exhaustive
+import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 class PlayersViewModel @Inject constructor(
 	private val getPlayersTotalUseCase: GetPlayersTotalSortedDescendingUseCase,
+	private val getKingOfTheGameUseCase: GetKingOfTheGameUseCase,
 	private val schedulers: Schedulers
 ) : BaseClosableViewModel<PlayersViewModel.State>() {
 
@@ -26,18 +30,29 @@ class PlayersViewModel @Inject constructor(
 	}
 
 	private fun loadPlayersTotal(sortOrder: SortOrder) {
-		disposables + getPlayersTotalUseCase.getPlayersTotal(sortOrder.toDomain())
+		disposables + Single.zip(
+			getPlayersTotalUseCase.getPlayersTotal(sortOrder.toDomain()),
+			getKingOfTheGameUseCase.getKingOfTheGame()
+		) { playersTotal, optionalKingOfGame ->
+			val kingOfGame = optionalKingOfGame.orElse(null)
+			playersTotal to kingOfGame
+		}
 			.observeOn(schedulers.main)
 			.subscribe(
-				{ totals -> setupPlayersTotal(sortOrder, totals) },
+				{ (totals, kingOfGame) -> setupPlayersTotal(sortOrder, totals, kingOfGame) },
 				::handleError
 			)
 	}
 
-	private fun setupPlayersTotal(sortOrder: SortOrder, playersTotal: List<PlayerTotal>) {
+	private fun setupPlayersTotal(
+		sortOrder: SortOrder,
+		playersTotal: List<PlayerTotal>,
+		kingOfGame: PlayerTotal?
+	) {
 		mutableState.value = State.Content(
 			sortOrder = sortOrder,
-			playersTotal = playersTotal
+			playersTotal = playersTotal,
+			kingOfGame = kingOfGame
 		)
 	}
 
@@ -48,7 +63,11 @@ class PlayersViewModel @Inject constructor(
 	sealed class State : BaseViewModel.State {
 		object Loading : State()
 		data class Error(val cause: String) : State()
-		data class Content(val sortOrder: SortOrder, val playersTotal: List<PlayerTotal>) : State()
+		data class Content(
+			val sortOrder: SortOrder,
+			val playersTotal: List<PlayerTotal>,
+			val kingOfGame: PlayerTotal?
+		) : State()
 	}
 
 	enum class SortOrder {

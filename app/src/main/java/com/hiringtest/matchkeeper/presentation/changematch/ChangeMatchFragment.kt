@@ -79,7 +79,11 @@ class ChangeMatchFragment : BaseFragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		viewModel.initState(isEdit = args.argIsEdit, matchId = args.argMatchId)
+		//for cases when fragment restored by system and we know that state of view model already loaded
+		if(savedInstanceState == null) {
+			viewModel.initState(isEdit = args.argIsEdit, matchId = args.argMatchId)
+		}
+
 		viewModel.closeData.observe(viewLifecycleOwner) { needClose ->
 			if (needClose) {
 				close()

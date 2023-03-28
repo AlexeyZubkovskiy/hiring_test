@@ -49,7 +49,6 @@ fun generateMatches(): List<Match> =  listOf(
 		first = PlayersScore(Person("Joel"), 0),
 		second = PlayersScore(Person("Diego"), 5)
 	),
-
 	Match(
 		id = generateId(),
 		date = 1677864265000.toDate(),

@@ -7,5 +7,9 @@ data class PlayerTotal(
 	val gamesPlayed: Int,
 	val gamesWon: Int
 ) {
-	val rating: Float get() = gamesWon.toFloat() / gamesPlayed.toFloat()
+	val rating: Float
+		get() = if (gamesWon != 0) {
+			gamesWon.toFloat() / gamesPlayed.toFloat()
+		} else 0f
+
 }

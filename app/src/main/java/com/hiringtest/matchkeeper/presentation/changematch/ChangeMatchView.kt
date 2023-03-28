@@ -199,7 +199,7 @@ private fun ChangeMatchContent(
 	}
 }
 
-fun prepareDatePickerDialog(
+private fun prepareDatePickerDialog(
 	context: Context,
 	date: Date,
 	datePickedListener: (Date) -> Unit
@@ -312,7 +312,7 @@ private fun PlayerScore(
 
 @Preview
 @Composable
-fun CreateMatchContentPreview() {
+private fun CreateMatchContentPreview() {
 	MatchKeeperTheme {
 		ChangeMatchContent(
 			state = ChangeMatchViewModel.State.Content.Create(
