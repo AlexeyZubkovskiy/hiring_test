@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.hiringtest.matchkeeper.presentation.base.BaseFragment
+import com.hiringtest.matchkeeper.presentation.theme.MatchKeeperTheme
 import com.hiringtest.matchkeeper.utils.appComponent
 import javax.inject.Inject
 
@@ -41,11 +42,14 @@ class PlayersFragment : BaseFragment() {
 
 				observableState.value?.let { state ->
 					Scaffold { paddingValues ->
-						PlayersScreenContent(
-							modifier = Modifier.padding(paddingValues),
-							state = state,
-							sortChangeListener = viewModel::sortOrderChanged
-						)
+						MatchKeeperTheme {
+							PlayersScreenContent(
+								modifier = Modifier.padding(paddingValues),
+								state = state,
+								sortChangeListener = viewModel::sortOrderChanged
+							)
+						}
+
 					}
 				}
 			}
